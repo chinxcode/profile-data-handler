@@ -6,7 +6,7 @@ const password = encodeURIComponent(process.env.PASSWORD);
 const cluster = process.env.CLUSTER;
 
 // uri = "mongodb://localhost:27017/";
-let uri = `mongodb+srv://${username}:${password}@${cluster}/?retryWrites=true&w=majority&appName=${username}`;
+let uri = `mongodb+srv://${username}:${password}@${cluster}/compition-data?retryWrites=true&w=majority&appName=${username}`;
 
 console.log(uri);
 const connectToDatabase = async () => {
