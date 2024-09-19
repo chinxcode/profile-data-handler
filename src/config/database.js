@@ -5,10 +5,9 @@ const username = encodeURIComponent(process.env.USER);
 const password = encodeURIComponent(process.env.PASSWORD);
 const cluster = process.env.CLUSTER;
 
-// uri = "mongodb://localhost:27017/";
+// uri = "mongodb://localhost:27017/competition-data";
 let uri = `mongodb+srv://${username}:${password}@${cluster}/compition-data?retryWrites=true&w=majority&appName=${username}`;
 
-console.log(uri);
 const connectToDatabase = async () => {
     try {
         await mongoose.connect(uri);

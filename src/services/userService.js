@@ -33,8 +33,20 @@ exports.updateUserData = async (userData) => {
             };
         }
     });
+    const existingSolvedQuestions = {};
+    user.solvedQuestions.forEach((value, key) => {
+        existingSolvedQuestions[key] = {
+            title: value.title,
+            slug: value.slug,
+            difficulty: value.difficulty,
+            status: value.status,
+            language: value.language,
+            timestamp: value.timestamp,
+        };
+    });
 
-    const updatedSolvedQuestions = { ...user.solvedQuestions, ...newSolvedQuestions };
+    const updatedSolvedQuestions = { ...existingSolvedQuestions, ...newSolvedQuestions };
+
     const totalQuestionsSolved = Object.keys(updatedSolvedQuestions).length;
     const easyQuestionsSolved = Object.values(updatedSolvedQuestions).filter((q) => q.difficulty === "Easy").length;
     const mediumQuestionsSolved = Object.values(updatedSolvedQuestions).filter((q) => q.difficulty === "Medium").length;
