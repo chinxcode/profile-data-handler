@@ -21,3 +21,14 @@ exports.updateCompetitionData = async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 };
+
+exports.getLeaderboard = async (req, res) => {
+    try {
+        const year = parseInt(req.query.year) || 1;
+        const users = await userService.getUsersByYear(year);
+        res.json(users);
+    } catch (error) {
+        console.error("Error fetching leaderboard:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+};

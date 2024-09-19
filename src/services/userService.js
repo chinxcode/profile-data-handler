@@ -6,6 +6,10 @@ exports.getAllUsers = async () => {
     return User.find();
 };
 
+exports.getUsersByYear = async (year) => {
+    return User.find({ year }).sort({ score: -1, rank: 1 });
+};
+
 exports.updateUserData = async (userData) => {
     const user = await User.findOne({ username: userData.username });
     if (!user) return;
