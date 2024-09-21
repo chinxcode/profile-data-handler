@@ -24,8 +24,7 @@ exports.updateCompetitionData = async (req, res) => {
 
 exports.getLeaderboard = async (req, res) => {
     try {
-        const year = parseInt(req.query.year) || 1;
-        const users = await userService.getUsersByYear(year);
+        const users = await userService.getAllUsers();
         res.json(users);
     } catch (error) {
         console.error("Error fetching leaderboard:", error);
