@@ -11,10 +11,14 @@ exports.updateUserData = async (userData) => {
     if (!user) return;
 
     const competitionStartTime = parseInt(process.env.COMPETITION_START_TIME);
+    const competitionEndTime = parseInt(process.env.COMPETITION_END_TIME);
     const newSolvedQuestions = {};
 
     const submissionsToProcess = userData.profile.recentSubmissions.filter(
-        (submission) => submission.statusDisplay === "Accepted" && submission.timestamp > competitionStartTime
+        (submission) =>
+            submission.statusDisplay === "Accepted" &&
+            submission.timestamp > competitionStartTime &&
+            submission.timestamp <= competitionEndTime
     );
 
     const difficultiesPromises = submissionsToProcess.map((submission) => leetcodeService.fetchQuestionDifficulty(submission.titleSlug));
