@@ -83,10 +83,20 @@ exports.updateUserData = async (userData) => {
 async function updateRanks(year) {
     const usersInYear = await User.find({ year }).sort({ score: -1 });
 
+    let currentRank = 1;
+    let currentScore = null;
+    let skipCount = 0;
+
     for (let i = 0; i < usersInYear.length; i++) {
         const user = usersInYear[i];
-        const rank = i + 1;
 
-        await User.findByIdAndUpdate(user._id, { rank });
+        if (user.score !== currentScore) {
+            currentRank += skipCount;
+            currentScore = user.score;
+            skipCount = 0;
+        }
+
+        await User.findByIdAndUpdate(user._id, { rank: currentRank });
+        skipCount++;
     }
 }
