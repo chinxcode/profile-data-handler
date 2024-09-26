@@ -1,3 +1,3 @@
 exports.calculateScore = (easy, medium, hard) => {
-    return easy * 10 + medium * 20 + hard * 30;
+    return easy * 10 + medium * 15 + hard * 20;
 };
