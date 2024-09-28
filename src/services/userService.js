@@ -90,6 +90,10 @@ async function updateRanks(year) {
     for (let i = 0; i < usersInYear.length; i++) {
         const user = usersInYear[i];
 
+        if (user.score === 0) {
+            continue;
+        }
+
         if (user.score !== currentScore) {
             currentRank += skipCount;
             currentScore = user.score;
