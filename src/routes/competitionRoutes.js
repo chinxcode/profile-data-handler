@@ -4,6 +4,6 @@ const competitionController = require("../controllers/competitionController");
 
 router.get("/update-competition-data", competitionController.updateCompetitionData);
 
-router.get("/leaderboard", competitionController.getLeaderboard);
+router.get("/leaderboard-data", competitionController.getLeaderboard);
 
 module.exports = router;
