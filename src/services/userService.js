@@ -14,6 +14,12 @@ exports.updateUserData = async (userData) => {
     const competitionEndTime = parseInt(process.env.COMPETITION_END_TIME);
     const newSolvedQuestions = {};
 
+    // Add this check
+    if (!userData || !userData.profile || !userData.profile.recentSubmissions) {
+        console.error("Invalid userData structure:", userData);
+        return;
+    }
+
     const submissionsToProcess = userData.profile.recentSubmissions.filter(
         (submission) =>
             submission.statusDisplay === "Accepted" &&
@@ -79,7 +85,6 @@ exports.updateUserData = async (userData) => {
     );
     await updateRanks(updatedUser.year);
 };
-
 async function updateRanks(year) {
     const usersInYear = await User.find({ year }).sort({ score: -1 });
 
