@@ -16,7 +16,7 @@ exports.updateUserData = async (userData) => {
 
     // Add this check
     if (!userData || !userData.profile || !userData.profile.recentSubmissions) {
-        console.error("Invalid userData structure:", userData);
+        console.error("Invalid userData structure:", userData.username);
         return;
     }
 
