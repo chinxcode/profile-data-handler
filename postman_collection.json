@@ -1,0 +1,451 @@
+{
+  "info": {
+    "name": "Profile Data Handler API",
+    "description": "Complete API collection for LeetCode Competition Profile Data Handler",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "eventId",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["health"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Students",
+      "item": [
+        {
+          "name": "Get All Students",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/students",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "students"]
+            }
+          }
+        },
+        {
+          "name": "Get All Students (with filters)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/students?year=2&page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "students"],
+              "query": [
+                { "key": "year", "value": "2" },
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Student by Username",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/students/:username",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "students", ":username"],
+              "variable": [
+                {
+                  "key": "username",
+                  "value": "john_doe"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Students by Year",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/students/year/:year",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "students", "year", ":year"],
+              "variable": [
+                {
+                  "key": "year",
+                  "value": "2"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Student",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"john_doe\",\n  \"name\": \"John Doe\",\n  \"enrollment\": \"12345\",\n  \"year\": 2\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/students",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "students"]
+            }
+          }
+        },
+        {
+          "name": "Bulk Import Students",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"students\": [\n    {\n      \"username\": \"user1\",\n      \"name\": \"User One\",\n      \"enrollment\": \"E001\",\n      \"year\": 1\n    },\n    {\n      \"username\": \"user2\",\n      \"name\": \"User Two\",\n      \"enrollment\": \"E002\",\n      \"year\": 2\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/students/bulk-import",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "students", "bulk-import"]
+            }
+          }
+        },
+        {
+          "name": "Update Student",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe Updated\",\n  \"year\": 3,\n  \"isActive\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/students/:username",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "students", ":username"],
+              "variable": [
+                {
+                  "key": "username",
+                  "value": "john_doe"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Student (Soft)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/students/:username",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "students", ":username"],
+              "variable": [
+                {
+                  "key": "username",
+                  "value": "john_doe"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Student (Permanent)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/students/:username/permanent",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "students", ":username", "permanent"],
+              "variable": [
+                {
+                  "key": "username",
+                  "value": "john_doe"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Events",
+      "item": [
+        {
+          "name": "Get All Events",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/events",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "events"]
+            }
+          }
+        },
+        {
+          "name": "Get Active Events",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/active",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "events", "active"]
+            }
+          }
+        },
+        {
+          "name": "Get Event by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "events", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "{{eventId}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Event",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Spring 2024 Competition\",\n  \"description\": \"Annual spring coding competition\",\n  \"startTime\": 1704067200000,\n  \"endTime\": 1709251200000,\n  \"years\": [1, 2, 3, 4],\n  \"isActive\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/events",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "events"]
+            }
+          }
+        },
+        {
+          "name": "Update Event",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Event Name\",\n  \"description\": \"Updated description\",\n  \"isActive\": false\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/events/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "events", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "{{eventId}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Event (Soft)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "events", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "{{eventId}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Event (Permanent)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/:id/permanent",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "events", ":id", "permanent"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "{{eventId}}"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Competition",
+      "item": [
+        {
+          "name": "Update Competition Data (Legacy)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/update-competition-data",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "update-competition-data"]
+            }
+          }
+        },
+        {
+          "name": "Get Leaderboard (Legacy)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/leaderboard-data",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "leaderboard-data"]
+            }
+          }
+        },
+        {
+          "name": "Get Leaderboard by Year (Legacy)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/leaderboard-data?year=2",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "leaderboard-data"],
+              "query": [
+                {
+                  "key": "year",
+                  "value": "2"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Competition Data by Event",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/:eventId/update-data",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "events", ":eventId", "update-data"],
+              "variable": [
+                {
+                  "key": "eventId",
+                  "value": "{{eventId}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Leaderboard by Event",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/:eventId/leaderboard",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "events", ":eventId", "leaderboard"],
+              "variable": [
+                {
+                  "key": "eventId",
+                  "value": "{{eventId}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Leaderboard by Event and Year",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/events/:eventId/leaderboard?year=2",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "events", ":eventId", "leaderboard"],
+              "query": [
+                {
+                  "key": "year",
+                  "value": "2"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "eventId",
+                  "value": "{{eventId}}"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
