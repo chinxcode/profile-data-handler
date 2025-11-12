@@ -1,6 +1,7 @@
 const userService = require("../services/userService");
 const leetcodeService = require("../services/leetcodeService");
 const Event = require("../models/Event");
+const { isValidObjectId } = require("../utils/sanitizer");
 
 const BATCH_SIZE = 30;
 
@@ -8,6 +9,10 @@ const BATCH_SIZE = 30;
 exports.updateCompetitionDataByEvent = async (req, res) => {
     try {
         const { eventId } = req.params;
+        
+        if (!isValidObjectId(eventId)) {
+            return res.status(400).json({ error: "Invalid event ID format" });
+        }
         
         const event = await Event.findById(eventId);
         if (!event) {
@@ -64,6 +69,10 @@ exports.getLeaderboardByEvent = async (req, res) => {
     try {
         const { eventId } = req.params;
         const { year } = req.query;
+        
+        if (!isValidObjectId(eventId)) {
+            return res.status(400).json({ error: "Invalid event ID format" });
+        }
         
         const event = await Event.findById(eventId);
         if (!event) {

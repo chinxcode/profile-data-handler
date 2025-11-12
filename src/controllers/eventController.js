@@ -1,4 +1,5 @@
 const Event = require("../models/Event");
+const { isValidObjectId } = require("../utils/sanitizer");
 
 // Get all events
 exports.getAllEvents = async (req, res) => {
@@ -36,6 +37,11 @@ exports.getAllEvents = async (req, res) => {
 exports.getEventById = async (req, res) => {
     try {
         const { id } = req.params;
+        
+        if (!isValidObjectId(id)) {
+            return res.status(400).json({ error: "Invalid event ID format" });
+        }
+        
         const event = await Event.findById(id);
         
         if (!event) {
@@ -97,6 +103,11 @@ exports.createEvent = async (req, res) => {
 exports.updateEvent = async (req, res) => {
     try {
         const { id } = req.params;
+        
+        if (!isValidObjectId(id)) {
+            return res.status(400).json({ error: "Invalid event ID format" });
+        }
+        
         const { name, description, startTime, endTime, years, isActive } = req.body;
         
         const updateData = { updatedAt: Date.now() };
@@ -131,6 +142,10 @@ exports.deleteEvent = async (req, res) => {
     try {
         const { id } = req.params;
         
+        if (!isValidObjectId(id)) {
+            return res.status(400).json({ error: "Invalid event ID format" });
+        }
+        
         const event = await Event.findByIdAndUpdate(
             id,
             { isActive: false, updatedAt: Date.now() },
@@ -152,6 +167,10 @@ exports.deleteEvent = async (req, res) => {
 exports.permanentlyDeleteEvent = async (req, res) => {
     try {
         const { id } = req.params;
+        
+        if (!isValidObjectId(id)) {
+            return res.status(400).json({ error: "Invalid event ID format" });
+        }
         
         const event = await Event.findByIdAndDelete(id);
         

@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const { sanitizeString } = require("../utils/sanitizer");
 
 // Get all students with optional filtering
 exports.getAllStudents = async (req, res) => {
@@ -36,7 +37,7 @@ exports.getAllStudents = async (req, res) => {
 // Get a single student by username
 exports.getStudentByUsername = async (req, res) => {
     try {
-        const { username } = req.params;
+        const username = sanitizeString(req.params.username);
         const student = await User.findOne({ username });
         
         if (!student) {
@@ -53,7 +54,8 @@ exports.getStudentByUsername = async (req, res) => {
 // Create a new student
 exports.createStudent = async (req, res) => {
     try {
-        const { username, name, enrollment, year } = req.body;
+        const username = sanitizeString(req.body.username);
+        const { name, enrollment, year } = req.body;
         
         // Check if student already exists
         const existingStudent = await User.findOne({ username });
@@ -86,7 +88,7 @@ exports.createStudent = async (req, res) => {
 // Update a student
 exports.updateStudent = async (req, res) => {
     try {
-        const { username } = req.params;
+        const username = sanitizeString(req.params.username);
         const { name, enrollment, year, isActive } = req.body;
         
         const updateData = { updatedAt: Date.now() };
@@ -115,7 +117,7 @@ exports.updateStudent = async (req, res) => {
 // Delete a student (soft delete by setting isActive to false)
 exports.deleteStudent = async (req, res) => {
     try {
-        const { username } = req.params;
+        const username = sanitizeString(req.params.username);
         
         const student = await User.findOneAndUpdate(
             { username },
@@ -137,7 +139,7 @@ exports.deleteStudent = async (req, res) => {
 // Permanently delete a student (hard delete)
 exports.permanentlyDeleteStudent = async (req, res) => {
     try {
-        const { username } = req.params;
+        const username = sanitizeString(req.params.username);
         
         const student = await User.findOneAndDelete({ username });
         
@@ -182,7 +184,8 @@ exports.bulkImportStudents = async (req, res) => {
         
         for (const studentData of students) {
             try {
-                const existingStudent = await User.findOne({ username: studentData.username });
+                const username = sanitizeString(studentData.username);
+                const existingStudent = await User.findOne({ username });
                 
                 if (existingStudent) {
                     results.failed.push({
@@ -193,7 +196,7 @@ exports.bulkImportStudents = async (req, res) => {
                 }
                 
                 const student = new User({
-                    username: studentData.username,
+                    username,
                     name: studentData.name,
                     enrollment: studentData.enrollment,
                     year: studentData.year ? parseInt(studentData.year) : undefined,
